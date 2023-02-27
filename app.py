@@ -28,7 +28,7 @@ def get_json_data(location, api_key=api_key):
         else:
             status = True
 
-    return weather_data.json()
+    return (location, weather_data.json())
 
 def weather_report(city_name, weather_json):
     """Prepares the weather report printout string"""
@@ -40,7 +40,9 @@ def weather_report(city_name, weather_json):
 def run():
     location_name = get_location_name()
 
-    weather_data = get_json_data(location_name)
+    # Gets location name again in case argv was passed and was unfindable
+    # Otherwise report includes the undindable name
+    location_name, weather_data = get_json_data(location_name)
 
     report = weather_report(location_name, weather_data)
 
